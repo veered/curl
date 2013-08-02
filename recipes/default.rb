@@ -12,7 +12,7 @@ else
   windows_zipfile "#{Chef::Config[:file_cache_path]}/extracted_curl" do
     action :unzip
     source node["curl"]["url"]
-    not_if { ::File.exists?("#{node["curl"]["dir"]}") }
+    not_if { ::File.exists?(node["curl"]["dir"]) }
   end
 
   node["curl"]["url"].split("/").last[/(.*)\.zip/]
@@ -21,7 +21,7 @@ else
   
   execute "xcopy /E /i #{cached_curl_dir} #{curl_dir}" do
     action :run
-    not_if { ::File.exists?("#{node["curl"]["dir"]}") }
+    not_if { ::File.exists?(node["curl"]["dir"]) }
   end
 
   remote_file "#{node["curl"]["dir"]}/curl-ca-bundle.crt" do
